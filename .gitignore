@@ -46,3 +46,10 @@ src/generated
 AGENTS.md
 CLAUDE.md
 .claude
+
+.vercel
+.env*
+
+# vercel marketplace agent files
+.agents
+skills-lock.json
