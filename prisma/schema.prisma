@@ -1,0 +1,569 @@
+// Mamon Brews — data model.
+// Everything the public site shows lives here so the owner can edit it from /admin.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── People & access ────────────────────────────────────────────────
+
+enum Role {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         Role       @default(EDITOR)
+  active       Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String // create | update | delete | login | status ...
+  entity    String // Product, Order, Page ...
+  entityId  String?
+  summary   String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model RateLimit {
+  key     String   @id
+  count   Int      @default(0)
+  resetAt DateTime
+}
+
+// ─── Site configuration ─────────────────────────────────────────────
+
+enum AnimationLevel {
+  FULL
+  REDUCED
+  OFF
+}
+
+model SiteSettings {
+  id                String         @id @default("site")
+  brandName         String
+  brandStyled       String
+  tagline           String
+  missionLine       String
+  logoUrl           String?
+  logoDarkUrl       String?
+  faviconUrl        String?
+  ogImageUrl        String?
+  whatsapp          String
+  phone             String
+  email             String?
+  address           String
+  city              String
+  region            String
+  postalCode        String?
+  hours             Json // [{ days, time }]
+  fssai             String?
+  socials           Json // { instagram, facebook, youtube, x }
+  announcement      Json // { enabled, text, linkLabel, href, bg, fg }
+  features          Json // FeatureFlags
+  animation         AnimationLevel @default(FULL)
+  whatsappTemplate  String
+  deliveryZones     Json // [{ name, fee, eta }]
+  minOrderValue     Int            @default(0)
+  deliveryEnabled   Boolean        @default(true)
+  pickupEnabled     Boolean        @default(true)
+  pickupAddress     String?
+  freeDeliveryAbove Int?
+  updatedAt         DateTime       @updatedAt
+}
+
+model ThemeSettings {
+  id          String   @id @default("theme")
+  forest      String
+  brandRed    String
+  sky         String
+  cream       String
+  ink         String
+  displayFont String
+  sansFont    String
+  radius      Int      @default(18)
+  grain       Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Pages & navigation ─────────────────────────────────────────────
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Page {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  status         PublishStatus @default(PUBLISHED)
+  system         Boolean       @default(false) // core routes can't be deleted
+  seoTitle       String?
+  seoDescription String?
+  ogImageUrl     String?
+  noindex        Boolean       @default(false)
+  sections       Section[]
+  draft          Json? // unpublished edits: [{ id, type, content, visible }]
+  draftUpdatedAt DateTime?
+  updatedAt      DateTime      @updatedAt
+  createdAt      DateTime      @default(now())
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  pageId    String
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  type      String
+  content   Json
+  order     Int
+  visible   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+
+  @@index([pageId, order])
+}
+
+model NavigationMenu {
+  id    String    @id @default(cuid())
+  key   String    @unique // header | footer
+  name  String
+  items NavItem[]
+}
+
+model NavItem {
+  id       String         @id @default(cuid())
+  menuId   String
+  menu     NavigationMenu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parentId String?
+  parent   NavItem?       @relation("NavChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children NavItem[]      @relation("NavChildren")
+  label    String
+  href     String
+  order    Int
+}
+
+// ─── Catalogue ──────────────────────────────────────────────────────
+
+enum StockStatus {
+  IN_STOCK
+  LOW_STOCK
+  SOLD_OUT
+  COMING_SOON
+}
+
+model Product {
+  id             String           @id @default(cuid())
+  name           String
+  slug           String           @unique
+  tagline        String
+  description    String // sanitized HTML
+  tastingNotes   String[]
+  ingredients    Json // [{ name, note, local }]
+  localStory     String?
+  accent         String
+  accentInk      String           @default("#141613")
+  tags           String[]
+  stockStatus    StockStatus      @default(IN_STOCK)
+  featured       Boolean          @default(false)
+  published      Boolean          @default(true)
+  sortOrder      Int              @default(0)
+  pairsWith      String[]
+  faqs           Json // [{ q, a }]
+  seoTitle       String?
+  seoDescription String?
+  variants       ProductVariant[]
+  images         ProductImage[]
+  bundleItems    BundleItem[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  label     String
+  price     Int? // rupees; null = price to be announced
+  compareAt Int?
+  sku       String?
+  isDefault Boolean @default(false)
+  order     Int     @default(0)
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String
+  order     Int     @default(0)
+}
+
+model Bundle {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  description String
+  price       Int
+  compareAt   Int?
+  imageUrl    String?
+  imageAlt    String?
+  badge       String?
+  active      Boolean      @default(true)
+  sortOrder   Int          @default(0)
+  items       BundleItem[]
+  updatedAt   DateTime     @updatedAt
+}
+
+model BundleItem {
+  id        String  @id @default(cuid())
+  bundleId  String
+  bundle    Bundle  @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+}
+
+enum DiscountType {
+  PERCENT
+  FLAT
+}
+
+model DiscountCode {
+  id         String       @id @default(cuid())
+  code       String       @unique
+  type       DiscountType @default(PERCENT)
+  value      Int
+  minOrder   Int          @default(0)
+  startsAt   DateTime?
+  endsAt     DateTime?
+  usageLimit Int?
+  usedCount  Int          @default(0)
+  active     Boolean      @default(true)
+  createdAt  DateTime     @default(now())
+}
+
+// ─── Commerce ───────────────────────────────────────────────────────
+
+model Customer {
+  id            String         @id @default(cuid())
+  phone         String         @unique
+  name          String
+  email         String?
+  area          String?
+  address       String?
+  notes         String?
+  orders        Order[]
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum Fulfilment {
+  DELIVERY
+  PICKUP
+}
+
+enum PaymentMethod {
+  WHATSAPP
+  RAZORPAY
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id                String        @id @default(cuid())
+  number            String        @unique
+  customerId        String
+  customer          Customer      @relation(fields: [customerId], references: [id])
+  status            OrderStatus   @default(NEW)
+  fulfilment        Fulfilment    @default(DELIVERY)
+  name              String
+  phone             String
+  email             String?
+  area              String
+  address           String?
+  preferredDate     String?
+  preferredTime     String?
+  notes             String?
+  subtotal          Int
+  discount          Int           @default(0)
+  deliveryFee       Int           @default(0)
+  total             Int
+  discountCode      String?
+  paymentMethod     PaymentMethod @default(WHATSAPP)
+  paymentStatus     PaymentStatus @default(UNPAID)
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  internalNotes     String?
+  items             OrderItem[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+model OrderItem {
+  id           String  @id @default(cuid())
+  orderId      String
+  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String?
+  bundleId     String?
+  name         String
+  variantLabel String?
+  unitPrice    Int
+  quantity     Int
+}
+
+enum SubscriptionStatus {
+  REQUESTED
+  ACTIVE
+  PAUSED
+  CANCELLED
+}
+
+enum Frequency {
+  WEEKLY
+  BIWEEKLY
+}
+
+model Subscription {
+  id           String             @id @default(cuid())
+  customerId   String?
+  customer     Customer?          @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  name         String
+  phone        String
+  email        String?
+  area         String
+  address      String?
+  flavours     Json // [{ slug, name, quantity }]
+  frequency    Frequency          @default(WEEKLY)
+  bottles      Int
+  startDate    String?
+  status       SubscriptionStatus @default(REQUESTED)
+  nextDelivery DateTime?
+  notes        String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+}
+
+enum EnquiryType {
+  BUSINESS
+  EVENT
+  CONTACT
+  TASTING
+  GIFTING
+}
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+model Enquiry {
+  id            String        @id @default(cuid())
+  type          EnquiryType
+  status        EnquiryStatus @default(NEW)
+  name          String
+  phone         String?
+  email         String?
+  businessName  String?
+  businessType  String?
+  location      String?
+  monthlyVolume String?
+  eventDate     String?
+  message       String
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([createdAt])
+}
+
+// ─── Content ────────────────────────────────────────────────────────
+
+model Stockist {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  area      String
+  hours     String?
+  phone     String?
+  mapsUrl   String?
+  lat       Float?
+  lng       Float?
+  kind      String   @default("Store")
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  startsAt    DateTime
+  endsAt      DateTime?
+  venue       String
+  address     String?
+  description String
+  posterUrl   String?
+  posterAlt   String?
+  gallery     Json // [{ url, alt }]
+  partners    String[]
+  published   Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String
+  slug  String @unique
+  order Int    @default(0)
+  posts Post[]
+}
+
+model Post {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  excerpt        String
+  content        String // sanitized HTML
+  coverUrl       String?
+  coverAlt       String?
+  categoryId     String?
+  category       Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  authorName     String
+  status         PublishStatus @default(DRAFT)
+  publishedAt    DateTime?
+  readingMinutes Int           @default(3)
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Testimonial {
+  id        String  @id @default(cuid())
+  quote     String
+  name      String
+  context   String?
+  rating    Int     @default(5)
+  published Boolean @default(true)
+  sortOrder Int     @default(0)
+}
+
+model Faq {
+  id         String  @id @default(cuid())
+  question   String
+  answer     String
+  category   String
+  showOnHome Boolean @default(false)
+  published  Boolean @default(true)
+  sortOrder  Int     @default(0)
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String
+  caption   String?
+  category  String
+  width     Int      @default(1200)
+  height    Int      @default(1500)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model TeamMember {
+  id        String  @id @default(cuid())
+  name      String
+  role      String
+  bio       String?
+  photoUrl  String?
+  sortOrder Int     @default(0)
+}
+
+model Milestone {
+  id          String @id @default(cuid())
+  dateLabel   String
+  title       String
+  description String
+  sortOrder   Int    @default(0)
+}
+
+model LegalPage {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  content   String // sanitized HTML
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  filename  String
+  alt       String   @default("")
+  folder    String   @default("General")
+  mime      String
+  size      Int
+  width     Int?
+  height    Int?
+  createdAt DateTime @default(now())
+
+  @@index([folder])
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  source       String   @default("website")
+  unsubscribed Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  type      String // whatsapp_click | add_to_cart | enquiry | order | newsletter
+  path      String?
+  label     String?
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+}

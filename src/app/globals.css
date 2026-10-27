@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Brand tokens. Real values are injected from Admin › Settings › Theme (see app/layout.tsx). */
+:root {
+  --forest: #1f3a2b;
+  --brand-red: #a8242c;
+  --sky: #9ccbe4;
+  --cream: #f5efe3;
+  --ink: #141613;
+  --radius: 18px;
+  --page-bg: var(--cream);
+  --tint: var(--forest);
+  --tint-ink: var(--cream);
+  --paper: color-mix(in oklab, var(--cream) 55%, white);
+  --line: color-mix(in oklab, var(--ink) 14%, transparent);
+  --muted: color-mix(in oklab, var(--ink) 66%, var(--cream));
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fizz: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@theme inline {
+  --color-forest: var(--forest);
+  --color-brand: var(--brand-red);
+  --color-sky: var(--sky);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-tint: var(--tint);
+  --color-tint-ink: var(--tint-ink);
+  --font-display: var(--font-display-family), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-sans-family), ui-sans-serif, system-ui, sans-serif;
+  --radius-brand: var(--radius);
+  --ease-out-brand: var(--ease-out);
+  --ease-fizz: var(--ease-fizz);
+  --breakpoint-xs: 22.5rem;
+  --breakpoint-3xl: 112rem;
+}
+
+/* ─── Fluid type scale ───────────────────────────────────────────── */
+@utility text-mega {
+  font-size: clamp(3.1rem, 1.4rem + 7.6vw, 10.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+}
+@utility text-display {
+  font-size: clamp(2.5rem, 1.5rem + 4.4vw, 6.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+@utility text-h2 {
+  font-size: clamp(2rem, 1.3rem + 2.9vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+@utility text-h3 {
+  font-size: clamp(1.45rem, 1.15rem + 1.1vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+@utility text-lead {
+  font-size: clamp(1.08rem, 0.98rem + 0.42vw, 1.4rem);
+  line-height: 1.5;
+}
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 96rem;
+  padding-inline: clamp(1rem, 0.4rem + 2.8vw, 3.5rem);
+}
+@utility section-y {
+  padding-block: clamp(4.5rem, 3rem + 6vw, 10rem);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--page-bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    transition: background-color 0.9s var(--ease-out);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 60, "WONK" 0;
+    font-weight: 380;
+  }
+  em.accent {
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  ::selection {
+    background: var(--brand-red);
+    color: var(--cream);
+  }
+  :focus-visible {
+    outline: 2.5px solid var(--brand-red);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  button:not(:disabled), [role="button"] {
+    cursor: pointer;
+  }
+  html[data-cursor="custom"] body * {
+    cursor: none !important;
+  }
+  html[data-cursor="custom"] body input, html[data-cursor="custom"] body textarea {
+    cursor: text !important;
+  }
+}
+
+/* Soft paper grain over the public site. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Rich text from the CMS */
+.prose-brew {
+  font-size: 1.075rem;
+  line-height: 1.75;
+  color: color-mix(in oklab, var(--ink) 88%, transparent);
+}
+.prose-brew > * + * { margin-top: 1.1em; }
+.prose-brew h2 { font-size: clamp(1.6rem, 1.3rem + 1vw, 2.2rem); line-height: 1.1; margin-top: 2em; color: var(--ink); }
+.prose-brew h3 { font-size: 1.4rem; margin-top: 1.6em; color: var(--ink); }
+.prose-brew a { color: var(--brand-red); text-decoration: underline; text-underline-offset: 3px; }
+.prose-brew ul { list-style: disc; padding-left: 1.3em; }
+.prose-brew ol { list-style: decimal; padding-left: 1.3em; }
+.prose-brew li + li { margin-top: 0.35em; }
+.prose-brew blockquote { border-left: 3px solid var(--brand-red); padding-left: 1.1em; font-family: var(--font-display); font-size: 1.35rem; font-style: italic; }
+.prose-brew img { border-radius: var(--radius); }
+.prose-brew strong { color: var(--ink); font-weight: 600; }
+
+/* Marquee */
+@keyframes marquee { to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee var(--marquee-duration, 38s) linear infinite; }
+
+/* Skeleton shimmer */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; background: color-mix(in oklab, currentColor 8%, transparent); border-radius: 12px; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in oklab, white 45%, transparent), transparent); animation: shimmer 1.4s infinite; }
+
+/* Rising fizz (CSS fallback for the canvas) */
+@keyframes rise {
+  0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  12% { opacity: 0.9; }
+  100% { transform: translate3d(var(--drift, 10px), -110vh, 0) scale(1.1); opacity: 0; }
+}
+
+/* Motion preferences: the OS setting and the admin "animations" switch both turn things off. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="off"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ─── Admin ──────────────────────────────────────────────────────── */
+.admin-root {
+  --a-bg: #f6f4ee;
+  --a-panel: #ffffff;
+  --a-line: #e6e1d6;
+  --a-text: #17191a;
+  --a-muted: #686d66;
+  --a-accent: #1f3a2b;
+  --a-accent-ink: #f5efe3;
+  --a-hover: #f0ece2;
+  background: var(--a-bg);
+  color: var(--a-text);
+  font-family: var(--font-sans);
+}
+.admin-root.dark {
+  --a-bg: #0e110f;
+  --a-panel: #161a18;
+  --a-line: #283029;
+  --a-text: #eef0ec;
+  --a-muted: #9aa29b;
+  --a-accent: #9fd0b0;
+  --a-accent-ink: #0e110f;
+  --a-hover: #1e2421;
+  color-scheme: dark;
+}
+@theme inline {
+  --color-a-bg: var(--a-bg);
+  --color-a-panel: var(--a-panel);
+  --color-a-line: var(--a-line);
+  --color-a-text: var(--a-text);
+  --color-a-muted: var(--a-muted);
+  --color-a-accent: var(--a-accent);
+  --color-a-accent-ink: var(--a-accent-ink);
+  --color-a-hover: var(--a-hover);
+}
+.admin-root :focus-visible { outline-color: var(--a-accent); }
+
+@media print {
+  .no-print { display: none !important; }
+  .admin-root, body { background: white !important; }
+  .grain::after { display: none; }
+}
+
+/* The admin has no paper grain and its own background. */
+body:has(.admin-root)::after { display: none; }
+body:has(.admin-root) { background: #f6f4ee; }
+.admin-root h1, .admin-root h2, .admin-root h3 { font-family: var(--font-sans); font-variation-settings: normal; font-weight: 600; }

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200"><defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs><rect width="1600" height="1200" fill="#F5EFE3"/><path d="M0 540 C 320 396, 560 597.6, 880.0000000000001 453.6 S 1360 396, 1600 511.2 V 1200 H 0 Z" fill="#E8DCC6"/><g transform="translate(150 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#C98A3D" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><g transform="translate(370 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#8FA67C" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><g transform="translate(590 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#E9C53F" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><g transform="translate(810 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#F0A62E" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><g transform="translate(1030 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#F08A24" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><g transform="translate(1250 360) scale(1.5)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#6A2C4E" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><rect width="1600" height="1200" filter="url(#g)" opacity=".35"/></svg>

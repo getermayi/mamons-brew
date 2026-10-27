@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" width="1200" height="1500"><defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs><rect width="1200" height="1500" fill="#F5EFE3"/><circle cx="600" cy="700" r="360" fill="none" stroke="#1F3A2B" stroke-width="26" stroke-dasharray="900 230"/><path d="M930 560 l60 -40 l10 80z" fill="#1F3A2B"/><g transform="translate(530 480) scale(1.1)">
+    <ellipse cx="60" cy="372" rx="54" ry="9" fill="#000" opacity=".12"/>
+    <path d="M44 0h32v10H44z" fill="#141613"/>
+    <path d="M42 10h36v18c0 10 8 22 20 38 12 16 18 30 18 52v236c0 10-8 18-18 18H22c-10 0-18-8-18-18V118c0-22 6-36 18-52 12-16 20-28 20-38z" fill="#3B2412" opacity=".88"/>
+    <path d="M10 160h100v206c0 7-5 12-12 12H22c-7 0-12-5-12-12z" fill="#9CCBE4" opacity=".85"/>
+    <rect x="14" y="190" width="92" height="104" rx="8" fill="#F5EFE3"/>
+    <circle cx="60" cy="222" r="15" fill="#A8242C"/><path d="M60 207a15 15 0 0 1 0 30a7.5 7.5 0 0 0 0-15a7.5 7.5 0 0 1 0-15z" fill="#9CCBE4"/>
+    <text x="60" y="262" font-family="Georgia,serif" font-size="13" text-anchor="middle" fill="#141613" letter-spacing="2">MAMON</text>
+    <text x="60" y="280" font-family="Arial,sans-serif" font-size="7" text-anchor="middle" fill="#141613" opacity=".7" letter-spacing="2">KOMBUCHA</text>
+    <path d="M26 120c-4 30-4 170 0 232" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".28" fill="none"/>
+  </g><rect width="1200" height="1500" filter="url(#g)" opacity=".35"/></svg>
