@@ -1,5 +1,9 @@
 # Mamon Brews — website & admin
 
+**Live:** https://mamon-brews.vercel.app · **Admin:** https://mamon-brews.vercel.app/admin · **Repo:** https://github.com/getermayi/mamons-brew
+
+Pushing to `main` deploys automatically on Vercel (project `mamon-brews`, Neon database `mamon-brews-db`, Blob store `mamon-brews-media`).
+
 Arunachal's handcrafted kombucha. A full-stack Next.js site where **every word, image, price and page is editable from `/admin`** — no code changes needed.
 
 - **Public site:** flavour scroll story that re-tints the page, cart → order saved → WhatsApp checkout, subscriptions, wholesale/event enquiries, journal, events with countdowns, gallery, FAQ, stockists & delivery zones.
